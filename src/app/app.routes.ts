@@ -80,10 +80,37 @@ export const routes: Routes = [
   },
 
   // ══════════════════════════════════════════════════════════
+  // RESELLER SHELL (sidebar + router-outlet)
+  // ══════════════════════════════════════════════════════════
+  {
+    path: 'reseller-dashboard',
+    loadComponent: () =>
+      import('./pages/reseller/reseller-layout/reseller-layout').then(m => m.default),
+    children: [
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/reseller/dashboard/dashboard').then(m => m.default),
+      },
+      {
+        path: 'clients',
+        loadComponent: () =>
+          import('./features/reseller/client/client').then(m => m.default),
+      },
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      }
+    ]
+  },
+
+  // ══════════════════════════════════════════════════════════
   // LOGIN PAGES (public, no sidebar)
   // ══════════════════════════════════════════════════════════
   { path: 'client',             component: LoginClient },
   { path: 'bo-admin-access',    component: LoginAdmin },
   { path: 'bo-reseller-access', component: LoginReseller },
 
+];
 ];
